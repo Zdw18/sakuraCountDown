@@ -1,0 +1,10 @@
+import { Router } from "express";
+import { AuthController } from "../controllers/authController.js";
+import { UserRepository } from "../repositories/userRepository.js";
+import { AuthService } from "../services/authService.js";
+const router = Router();
+const userRepository = new UserRepository();
+const authService = new AuthService(userRepository);
+const authController = new AuthController(authService);
+router.post("/login", authController.login);
+export { router as authRoutes };

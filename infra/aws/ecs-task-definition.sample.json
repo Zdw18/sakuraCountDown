@@ -1,0 +1,31 @@
+{
+  "family": "line-mini-app-backend",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "containerDefinitions": [
+    {
+      "name": "api",
+      "image": "YOUR_ECR_IMAGE_URI",
+      "essential": true,
+      "portMappings": [
+        {
+          "containerPort": 3001,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        { "name": "NODE_ENV", "value": "production" },
+        { "name": "PORT", "value": "3001" }
+      ],
+      "secrets": [
+        { "name": "DATABASE_URL", "valueFrom": "YOUR_SSM_DATABASE_URL_ARN" },
+        { "name": "REDIS_URL", "valueFrom": "YOUR_SSM_REDIS_URL_ARN" },
+        { "name": "LINE_CHANNEL_ID", "valueFrom": "YOUR_SSM_LINE_CHANNEL_ID_ARN" },
+        { "name": "LINE_CHANNEL_SECRET", "valueFrom": "YOUR_SSM_LINE_CHANNEL_SECRET_ARN" },
+        { "name": "FRONTEND_ORIGIN", "valueFrom": "YOUR_SSM_FRONTEND_ORIGIN_ARN" }
+      ]
+    }
+  ]
+}
